@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spark | The AI Study Coach for Teens</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #9FA0FF; /* Soft Lavender */
+            --primary-dark: #7B7CE5;
+            --secondary: #BCEFD0; /* Mint Green */
+            --accent: #FFB7B2; /* Pastel Peach */
+            --accent-hover: #FF9E99;
+            --bg-body: #FFFCF9; /* Warm off-white */
+            --bg-card: #FFFFFF;
+            --text-main: #4A4A58;
+            --text-light: #757585;
+            --shadow: 0 10px 30px rgba(159, 160, 255, 0.15);
+            --radius: 20px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Nunito', sans-serif;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 12px 32px;
+            border-radius: 50px;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            border: none;
+            font-size: 1.1rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(159, 160, 255, 0.4);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-accent {
+            background-color: var(--accent);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 183, 178, 0.4);
+        }
+
+        .btn-accent:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        /* Navigation */
+        header {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.03);
+            padding: 15px 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 800;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            font-weight: 600;
+            color: var(--text-main);
+            font-size: 1rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-cta {
+            display: none;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 0 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 85vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            right: -100px;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, var(--secondary) 0%, rgba(255,255,255,0) 70%);
+            opacity: 0.5;
+            z-index: -1;
+        }
+
+        .hero-content {
+            flex: 1;
+            max-width: 550px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .highlight {
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+
+        .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 12px;
+            background-color: var(--secondary);
+            z-index: -1;
+            opacity: 0.6;
+            border-radius: 4px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+
+        .hero-card-mockup {
+            background: white;
+            padding: 30px;
+            border-radius: 30px;
+            box-shadow: var(--shadow);
+            width: 350px;
+            transform: rotate(3deg);
+            border: 4px solid var(--primary);
+        }
+
+        .mockup-header {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .mockup-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #eee;
+        }
+
+        .chat-bubble {
+            background: #F0F1FF;
+            padding: 15px;
+            border-radius: 15px 15px 15px 0;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            color: var(--text-main);
+        }
+
+        .chat-bubble.user {
+            background: var(--secondary);
+            border-radius: 15px 15px 0 15px;
+            margin-left: auto;
+            text-align: right;
+            max-width: 80%;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            background-color: white;
+            border-radius: 50px 50px 0 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: var(--bg-body);
+            padding: 40px 30px;
+            border-radius: var(--radius);
+            transition: transform 0.3s;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 100px 0;
+            background-color: var(--bg-body);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            align-items: center;
+        }
+
+        .price-card {
+            background: white;
+            padding: 40px;
+            border-radius: var(--radius);
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            border: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .price-card.popular {
+            border-color: var(--primary);
+            transform: scale(1.05);
+            position: relative;
+            box-shadow: var(--shadow);
+        }
+
+        .badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 20px 0;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .price span {
+            font-size: 1rem;
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        .features-list {
+            margin: 30px 0;
+            text-align: left;
+        }
+
+        .features-list li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-light);
+        }
+
+        .check {
+            color: var(--secondary);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* FAQ Section */
+        .faq {
+            padding: 80px 0;
+            background: white;
+            border-radius: 50px;
+            margin: 0 20px;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        details {
+            background: var(--bg-body);
+            margin-bottom: 15px;
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        details:hover {
+            background: #F5F0FF;
+        }
+
+        summary {
+            font-weight: 700;
+            font-size: 1.1rem;
+            font-family: 'Nunito', sans-serif;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--text-main);
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary::after {
+            content: '+';
+            font-size: 1.5rem;
+            color: var(--primary);
+            font-weight: 800;
+        }
+
+        details[open] summary::after {
+            content: '-';
+        }
+
+        details p {
+            margin-top: 15px;
+            color: var(--text-light);
+            padding-top: 15px;
+            border-top: 1px solid rgba(0,0,0,0.05);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, var(--primary) 0%, #B4B5FF 100%);
+            border-radius: 40px;
+            padding: 60px 40px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-box h2 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .cta-box p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        footer {
+            padding: 50px 0;
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .socials {
+            margin-bottom: 20px;
+        }
+
+        .socials a {
+            margin: 0 10px;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        /* Responsive */
+        @media (min-width: 769px) {
+            .nav-cta {
+                display: block;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 40px;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-image {
+                margin-top: 50px;
+            }
+
+            .nav-links {
+                display: none; /* Simple hiding for mobile for this pure HTML demo */
+            }
+            
+            .price-card.popular {
+                transform: scale(1);
+            }
+            
+            .cta-box h2 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">
+                    <span>✨</span> Spark.
+                </a>
+                <div class="nav-links">
+                    <a href="#features">Features</a>
+                    <a href="#pricing">Pricing</a>
+                    <a href="#faq">FAQ</a>
+                </div>
+                <a href="#cta" class="btn btn-primary nav-cta">Get Started</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container" style="display: flex; flex-direction: inherit; width: 100%; align-items: center;">
+            <div class="hero-content">
+                <h1>Studying is hard.<br> <span class="highlight">Spark</span> makes it easy.</h1>
+                <p>The AI study coach that builds your schedule, explains tough topics, and hypes you up when you need it most. No stress, just success.</p>
+                <a href="#cta" class="btn btn-accent">Try for Free</a>
+                <a href="#features" class="btn" style="color: var(--primary); margin-left: 10px;">How it works ↓</a>
+            </div>
+            <div class="hero-image">
+                <div class="hero-card-mockup">
+                    <div class="mockup-header">
+                        <div class="mockup-dot" style="background:#FF6B6B"></div>
+                        <div class="mockup-dot" style="background:#FFD93D"></div>
+                        <div class="mockup-dot" style="background:#6BCB77"></div>
+                    </div>
+                    <div class="chat-bubble">I have a history test on Friday and I'm freaking out! 😫</div>
+                    <div class="chat-bubble user">Don't worry! I've got you. Let's break it down into 3 small sessions.</div>
+                    <div class="chat-bubble user">Ready to start with "The Industrial Revolution" for 20 mins? ⏱️</div>
+                    <div class="chat-bubble">Let's go! 🚀</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Your new secret weapon</h2>
+                <p>Spark isn't just a calendar. It's a smart friend who knows exactly how you learn best.</p>
+            </div>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📅</div>
+                    <h3>Smart Scheduling</h3>
+                    <p>Spark analyzes your syllabus and free time to create a balanced study plan that adapts if you miss a day.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3>Instant Explainers</h3>
+                    <p>Stuck on a concept? Snap a picture or type it in. Spark explains it simply, like a friend would, not a textbook.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔋</div>
+                    <h3>Energy Tracking</h3>
+                    <p>We track your focus levels. If you're tired, Spark suggests easier tasks or a quick break to recharge.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <div class="section-header">
+                <h2>Plans that fit your pocket money</h2>
+                <p>Start for free, upgrade when you're ready to crush those finals.</p>
+            </div>
+            <div class="pricing-grid">
+                <!-- Free Plan -->
+                <div class="price-card">
+                    <h3>Starter</h3>
+                    <div class="price">$0<span>/mo</span></div>
+                    <ul class="features-list">
+                        <li><span class="check">✓</span> Smart Calendar</li>
+                        <li><span class="check">✓</span> 5 AI Questions/day</li>
+                        <li><span class="check">✓</span> Basic Progress Tracking</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary" style="background:transparent; border: 2px solid var(--primary); color: var(--primary);">Sign Up Free</a>
+                </div>
+                
+                <!-- Pro Plan -->
+                <div class="price-card popular">
+                    <div class="badge">MOST POPULAR</div>
+                    <h3>Honor Roll</h3>
+                    <div class="price">$5<span>/mo</span></div>
+                    <ul class="features-list">
+                        <li><span class="check">✓</span> Everything in Starter</li>
+                        <li><span class="check">✓</span> Unlimited AI Help</li>
+                        <li><span class="check">✓</span> Exam Simulator</li>
+                        <li><span class="check">✓</span> Voice Mode</li>
+                    </ul>
+                    <a href="#" class="btn btn-accent" style="width: 100%;">Get Spark Pro</a>
+                </div>
+
+                <!-- Team Plan -->
+                <div class="price-card">
+                    <h3>Study Group</h3>
+                    <div class="price">$12<span>/mo</span></div>
+                    <ul class="features-list">
+                        <li><span class="check">✓</span> 4 Pro Accounts</li>
+                        <li><span class="check">✓</span> Shared Flashcards</li>
+                        <li><span class="check">✓</span> Group Challenges</li>
+                        <li><span class="check">✓</span> Leaderboards</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary" style="background:transparent; border: 2px solid var(--primary); color: var(--primary);">Create Group</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq">
+        <div class="container faq-container">
+            <div class="section-header">
+                <h2>Questions? We've got answers.</h2>
+            </div>
+            
+            <details>
+                <summary>Is using Spark considered cheating?</summary>
+                <p>Not at all! Spark is a coach, not a cheat sheet. It helps you understand concepts and organize your time so you can do the work yourself. We don't write essays for you; we help you brainstorm ideas.</p>
+            </details>
+
+            <details>
+                <summary>Can I use it for any subject?</summary>
+                <p>Absolutely. From Calculus to History to French, Spark's AI is trained on a massive library of high school and early college curriculums.</p>
+            </details>
+
+            <details>
+                <summary>Does it work on my phone?</summary>
+                <p>Yes! Spark is designed mobile-first so you can study on the bus, in the library, or from the comfort of your bed (we won't judge).</p>
+            </details>
+
+            <details>
+                <summary>Can I cancel the Pro plan anytime?</summary>
+                <p>Yup. No contracts, no weird hidden fees. Cancel with one click in your settings if you don't need it anymore.</p>
+            </details>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="cta" class="cta-section">
+        <div class="container">
+            <div class="cta-box">
+                <h2>Ready to turn "I can't" into "I did"?</h2>
+                <p>Join 50,000+ students who are stressing less and scoring higher.</p>
+                <a href="#" class="btn" style="background: white; color: var(--primary);">Start Studying Smarter</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="socials">
+                <a href="#">📷</a>
+                <a href="#">🎵</a>
+                <a href="#">🐦</a>
+            </div>
+            <p>&copy; 2023 Spark Study App. Made with 💜 for students everywhere.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
