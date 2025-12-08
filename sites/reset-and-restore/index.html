@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset & Restore | Digital Wellness</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg: #FDFCF8;
+            --color-text: #4A4843;
+            --color-primary: #8C9A86; /* Sage */
+            --color-secondary: #D4A373; /* Soft Clay */
+            --color-accent: #E8EBE4; /* Pale Green */
+            --color-white: #FFFFFF;
+            --spacing-section: 6rem 2rem;
+            --border-radius: 12px;
+            --shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.7;
+            font-size: 18px;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Cormorant Garmond', serif;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        h1 { font-size: 3.5rem; color: var(--color-text); }
+        h2 { font-size: 2.5rem; margin-bottom: 1rem; color: var(--color-primary); }
+        h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+
+        p { margin-bottom: 1.5rem; }
+
+        a { text-decoration: none; }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--color-secondary);
+            color: var(--color-white);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            cursor: pointer;
+            border: none;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            background-color: #c08578;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* Nav */
+        nav {
+            padding: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--color-primary);
+        }
+
+        /* Hero Section */
+        header.hero {
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: radial-gradient(circle at center, #f4f6f0 0%, #FDFCF8 70%);
+            padding: 2rem;
+        }
+
+        .hero-content {
+            max-width: 700px;
+            animation: fadeIn 2s ease-out;
+        }
+
+        .hero-tagline {
+            color: var(--color-secondary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: block;
+            font-weight: 700;
+        }
+
+        /* Science Section */
+        #science {
+            padding: var(--spacing-section);
+            background-color: var(--color-white);
+        }
+
+        .science-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .science-stat {
+            background-color: var(--color-accent);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1rem;
+        }
+
+        .science-stat span {
+            display: block;
+            font-size: 2.5rem;
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--color-primary);
+        }
+
+        /* Steps Section */
+        #steps {
+            padding: var(--spacing-section);
+            background-color: var(--color-bg);
+            text-align: center;
+        }
+
+        .steps-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step-card {
+            position: relative;
+            padding: 2rem;
+        }
+
+        .step-number {
+            font-size: 4rem;
+            color: rgba(140, 154, 134, 0.2);
+            font-family: 'Cormorant Garamond', serif;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 0;
+        }
+
+        .step-content {
+            position: relative;
+            z-index: 1;
+            padding-top: 2rem;
+        }
+
+        /* Rituals Section */
+        #rituals {
+            padding: var(--spacing-section);
+            background-color: var(--color-primary);
+            color: var(--color-white);
+        }
+
+        #rituals h2 {
+            color: var(--color-white);
+            text-align: center;
+        }
+
+        #rituals .intro {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 3rem auto;
+            opacity: 0.9;
+        }
+
+        .rituals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .ritual-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 2.5rem;
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .ritual-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255,255,255,0.15);
+        }
+
+        .ritual-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        /* Testimonials */
+        #testimonials {
+            padding: var(--spacing-section);
+            text-align: center;
+            background-color: #f7f5f0;
+        }
+
+        .testimonial-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .testimonial-card {
+            background: var(--color-white);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            flex: 1 1 300px;
+            max-width: 400px;
+            text-align: left;
+        }
+
+        .quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            font-style: italic;
+            color: var(--color-text);
+        }
+
+        .author {
+            margin-top: 1rem;
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--color-secondary);
+        }
+
+        /* Pricing */
+        #pricing {
+            padding: var(--spacing-section);
+            text-align: center;
+        }
+
+        .pricing-card {
+            background: var(--color-white);
+            border: 2px solid var(--color-accent);
+            border-radius: var(--border-radius);
+            padding: 3rem;
+            max-width: 500px;
+            margin: 2rem auto;
+            box-shadow: var(--shadow);
+        }
+
+        .price {
+            font-size: 3rem;
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--color-primary);
+            margin: 1rem 0;
+        }
+
+        .features-list {
+            list-style: none;
+            margin: 2rem 0;
+            text-align: left;
+        }
+
+        .features-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .features-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--color-text);
+            color: #ccc;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        footer h2 {
+            color: var(--color-white);
+            font-size: 2rem;
+        }
+
+        .footer-cta {
+            margin-top: 2rem;
+        }
+
+        .copyright {
+            margin-top: 4rem;
+            font-size: 0.8rem;
+            opacity: 0.6;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            .science-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .hero-content { padding: 0 1rem; }
+            nav { justify-content: center; }
+            nav .btn { display: none; } /* Hide nav button on mobile, rely on page CTAs */
+            .logo { margin-bottom: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">Reset & Restore</div>
+        <a href="#pricing" class="btn">Get Started</a>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <span class="hero-tagline">Digital Wellness Program</span>
+            <h1>Reclaim your mind from the digital noise.</h1>
+            <p>A gentle, 4-week journey to unhook from screens, soothe digital fatigue, and rediscover the beauty of the present moment.</p>
+            <br>
+            <a href="#pricing" class="btn">Start My Reset</a>
+        </div>
+    </header>
+
+    <section id="science" class="container">
+        <div class="science-grid">
+            <div class="science-text">
+                <h2>The Science of Digital Burnout</h2>
+                <p>It’s not just "in your head." Constant connectivity triggers a chronic state of fight-or-flight. The blue light from our screens suppresses melatonin, while the dopamine loops from social media fragment our attention span.</p>
+                <p>Our program is rooted in neuroscience and behavioral psychology, designed to lower cortisol levels and restore your natural circadian rhythm without requiring you to delete every app you own.</p>
+            </div>
+            <div class="science-stats">
+                <div class="science-stat">
+                    <span>11 Hours</span>
+                    Average daily screen time for adults.
+                </div>
+                <div class="science-stat">
+                    <span>+200%</span>
+                    Increase in digital anxiety since 2019.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="program">
+        <div class="container">
+            <h2>The 4-Step Journey</h2>
+            <p>We don't believe in cold turkey. We believe in sustainable balance.</p>
+            
+            <div class="steps-container">
+                <div class="step-card">
+                    <div class="step-number">01</div>
+                    <div class="step-content">
+                        <h3>Awareness</h3>
+                        <p>Track your triggers and understand the "why" behind your scrolling habits.</p>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">02</div>
+                    <div class="step-content">
+                        <h3>Detox</h3>
+                        <p>A gentle 3-day guided unplug to reset your dopamine receptors.</p>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">03</div>
+                    <div class="step-content">
+                        <h3>Rebuild</h3>
+                        <p>Implement physical boundaries and tech-free zones in your home.</p>
+                    </div>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">04</div>
+                    <div class="step-content">
+                        <h3>Sustain</h3>
+                        <p>Create a long-term "digital diet" that allows you to use tech as a tool, not a crutch.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="rituals">
+        <div class="container">
+            <h2>Daily Rituals</h2>
+            <p class="intro">Small, mindful practices integrated into your day to break the cycle of screen fatigue.</p>
+            
+            <div class="rituals-grid">
+                <div class="ritual-card">
+                    <span class="ritual-icon">🌬️</span>
+                    <h3>4-7-8 Breathwork</h3>
+                    <p>A simple breathing technique to switch your nervous system from sympathetic (stress) to parasympathetic (rest).</p>
+                </div>
+                <div class="ritual-card">
+                    <span class="ritual-icon">👁️</span>
+                    <h3>The 20-20-20 Rule</h3>
+                    <p>Every 20 minutes, look at something 20 feet away for 20 seconds to reduce eye strain and headaches.</p>
+                </div>
+                <div class="ritual-card">
+                    <span class="ritual-icon">🧘</span>
+                    <h3>Tech-Free Mornings</h3>
+                    <p>Guided stretching and intention setting for the first 30 minutes of your day before checking notifications.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials">
+        <div class="container">
+            <h2>Stories of Restoration</h2>
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <p class="quote">"I didn't realize how much fog I was living in until I took this course. I feel like I have my brain back. The gentle approach made it actually doable."</p>
+                    <p class="author">— Sarah J., Graphic Designer</p>
+                </div>
+                <div class="testimonial-card">
+                    <p class="quote">"Finally, a program that doesn't shame you for using a phone. It’s about balance. I sleep better, and my anxiety has dropped significantly."</p>
+                    <p class="author">— Mark T., Software Engineer</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing">
+        <div class="container">
+            <h2>Invest in Your Peace</h2>
+            <div class="pricing-card">
+                <h3>The Complete Program</h3>
+                <div class="price">$49</div>
+                <p>Lifetime access to the course and community.</p>
+                <ul class="features-list">
+                    <li>✓ 4-Week Step-by-Step Guide</li>
+                    <li>✓ Daily Audio Meditations</li>
+                    <li>✓ Printable Digital Boundary Workbook</li>
+                    <li>✓ Access to the 'Offline' Community</li>
+                </ul>
+                <a href="#" class="btn">Start My Reset</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <h2>Ready to look up?</h2>
+            <p>Your life is happening right now, offline.</p>
+            <div class="footer-cta">
+                <a href="#pricing" class="btn">Start My Reset</a>
+            </div>
+            <p class="copyright">&copy; 2023 Reset & Restore Program. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
