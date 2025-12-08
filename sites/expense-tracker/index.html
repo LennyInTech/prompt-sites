@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinTrack | Professional Budget Management</title>
+    <style>
+        :root {
+            --primary: #0f172a;
+            --secondary: #334155;
+            --accent: #2563eb;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --bg-body: #f1f5f9;
+            --bg-card: #ffffff;
+            --border: #e2e8f0;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* Utilities */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #1d4ed8;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Header */
+        header {
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--secondary);
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: #cbd5e1;
+            margin-bottom: 2.5rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* App Interface / Dashboard Section */
+        .dashboard-preview {
+            margin-top: -3rem; /* Overlap hero */
+            padding-bottom: 4rem;
+        }
+
+        .app-shell {
+            background: var(--bg-body);
+            border-radius: 12px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            border: 1px solid var(--border);
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: 800px;
+        }
+
+        /* App Sidebar */
+        .app-sidebar {
+            background: var(--bg-card);
+            border-right: 1px solid var(--border);
+            padding: 1.5rem;
+        }
+
+        .app-menu-item {
+            display: block;
+            padding: 0.75rem 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 6px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .app-menu-item.active {
+            background-color: #eff6ff;
+            color: var(--accent);
+        }
+
+        .budget-widget {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .budget-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+        }
+
+        .fill-groceries { width: 75%; background: var(--warning); }
+        .fill-housing { width: 90%; background: var(--danger); }
+        .fill-savings { width: 40%; background: var(--success); }
+
+        /* App Main Content */
+        .app-main {
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            grid-template-rows: auto auto 1fr;
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .stat-card h3 {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .amount {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .trend {
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+        .trend.up { color: var(--success); }
+        .trend.down { color: var(--danger); }
+
+        /* Chart Section */
+        .chart-section {
+            grid-column: 1 / 2;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .chart-visual {
+            flex-grow: 1;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+            gap: 10px;
+        }
+
+        .bar {
+            width: 100%;
+            background-color: var(--accent);
+            border-radius: 4px 4px 0 0;
+            opacity: 0.8;
+            transition: height 1s ease;
+            position: relative;
+        }
+        
+        .bar:hover { opacity: 1; }
+
+        .bar::after {
+            content: attr(data-day);
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Form Section */
+        .add-expense-section {
+            grid-column: 2 / 3;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.6rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* History List */
+        .history-section {
+            grid-column: 1 / -1;
+        }
+
+        .transaction-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .transaction-table th {
+            text-align: left;
+            padding: 1rem;
+            background-color: #f8fafc;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.875rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .transaction-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.95rem;
+        }
+
+        .cat-tag {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .cat-food { background: #fee2e2; color: #991b1b; }
+        .cat-tech { background: #e0f2fe; color: #075985; }
+        .cat-utilities { background: #fef3c7; color: #92400e; }
+
+        /* Features */
+        .features {
+            padding: 5rem 0;
+            background: white;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            padding: 2rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            transition: transform 0.2s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: #eff6ff;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* CTA */
+        .cta-section {
+            padding: 6rem 0;
+            background: var(--primary);
+            color: white;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-card);
+            border-top: 1px solid var(--border);
+            padding: 3rem 0;
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .app-shell {
+                grid-template-columns: 1fr;
+            }
+            .app-sidebar {
+                display: none; /* Hide sidebar on tablet for simplicity in this demo */
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .app-main {
+                grid-template-columns: 1fr;
+            }
+            .add-expense-section {
+                grid-column: 1 / -1;
+                grid-row: 2;
+            }
+            .chart-section {
+                grid-column: 1 / -1;
+                grid-row: 3;
+            }
+            .history-section {
+                grid-row: 4;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .nav-links { display: none; }
+            .features-grid { grid-template-columns: 1fr; }
+            .container { padding: 0 15px; }
+            .chart-visual { height: 200px; }
+            .stats-grid { gap: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <span style="color: var(--accent); font-size: 1.8rem;">◧</span> FinTrack
+                </div>
+                <div class="nav-links">
+                    <a href="#">Overview</a>
+                    <a href="#">Features</a>
+                    <a href="#">Pricing</a>
+                    <a href="#" class="btn btn-primary" style="padding: 8px 16px;">Log In</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Clarity for Your Wallet.</h1>
+            <p>Track expenses, visualize your spending habits, and stick to your budget without the headache. Simple, secure, and professional.</p>
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <a href="#" class="btn btn-primary">Start Dashboard</a>
+                <a href="#" class="btn btn-outline" style="border-color: white; color: white;">View Demo</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Preview -->
+    <div class="container dashboard-preview">
+        <div class="app-shell">
+            <!-- Sidebar -->
+            <aside class="app-sidebar">
+                <nav>
+                    <a href="#" class="app-menu-item active">Dashboard</a>
+                    <a href="#" class="app-menu-item">Transactions</a>
+                    <a href="#" class="app-menu-item">Wallet</a>
+                    <a href="#" class="app-menu-item">Reports</a>
+                    <a href="#" class="app-menu-item">Settings</a>
+                </nav>
+
+                <div class="budget-widget">
+                    <div class="budget-label">
+                        <span>Groceries Limit</span>
+                        <span>75%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill fill-groceries"></div>
+                    </div>
+
+                    <div class="budget-label">
+                        <span>Housing</span>
+                        <span>90%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill fill-housing"></div>
+                    </div>
+
+                    <div class="budget-label">
+                        <span>Savings Goal</span>
+                        <span>40%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill fill-savings"></div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Application Area -->
+            <main class="app-main">
+                
+                <!-- Top Stats -->
+                <div class="stats-grid">
+                    <div class="card stat-card">
+                        <h3>Total Balance</h3>
+                        <div class="amount">$12,450.00</div>
+                        <div class="trend up">▲ 2.5% vs last month</div>
+                    </div>
+                    <div class="card stat-card">
+                        <h3>Monthly Income</h3>
+                        <div class="amount">$4,200.00</div>
+                        <div class="trend up">▲ Stable</div>
+                    </div>
+                    <div class="card stat-card">
+                        <h3>Expenses</h3>
+                        <div class="amount" style="color: var(--danger);">-$1,840.50</div>
+                        <div class="trend down">▼ 1.2% Lower</div>
+                    </div>
+                </div>
+
+                <!-- Visual Chart -->
+                <div class="card chart-section">
+                    <div class="chart-header">
+                        <h3>Weekly Spending Overview</h3>
+                        <select style="border: 1px solid #e2e8f0; padding: 4px; border-radius: 4px;">
+                            <option>This Week</option>
+                            <option>Last Week</option>
+                        </select>
+                    </div>
+                    <div class="chart-visual">
+                        <!-- CSS Bar Chart -->
+                        <div class="bar" style="height: 40%;" data-day="Mon"></div>
+                        <div class="bar" style="height: 75%; background-color: var(--primary);" data-day="Tue"></div>
+                        <div class="bar" style="height: 30%;" data-day="Wed"></div>
+                        <div class="bar" style="height: 50%;" data-day="Thu"></div>
+                        <div class="bar" style="height: 90%; background-color: var(--warning);" data-day="Fri"></div>
+                        <div class="bar" style="height: 60%;" data-day="Sat"></div>
+                        <div class="bar" style="height: 20%;" data-day="Sun"></div>
+                    </div>
+                </div>
+
+                <!-- Add Expense Form -->
+                <div class="card add-expense-section">
+                    <h3 style="margin-bottom: 1.5rem;">Add New Transaction</h3>
+                    <form onsubmit="event.preventDefault(); alert('This is a demo UI.');">
+                        <div class="form-group">
+                            <label>Amount</label>
+                            <input type="number" class="form-control" placeholder="$0.00">
+                        </div>
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select class="form-control">
+                                <option>Groceries</option>
+                                <option>Utilities</option>
+                                <option>Entertainment</option>
+                                <option>Rent</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Date</label>
+                            <input type="date" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Description</label>
+                            <input type="text" class="form-control" placeholder="Short note...">
+                        </div>
+                        <button type="submit" class="btn-submit">Add Entry</button>
+                    </form>
+                </div>
+
+                <!-- Recent Transactions -->
+                <div class="card history-section">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                        <h3>Recent Transactions</h3>
+                        <a href="#" style="color: var(--accent); text-decoration: none; font-size: 0.9rem;">View All</a>
+                    </div>
+                    <table class="transaction-table">
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th>Category</th>
+                                <th>Date</th>
+                                <th style="text-align: right;">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Whole Foods Market</td>
+                                <td><span class="cat-tag cat-food">Food & Dining</span></td>
+                                <td>Oct 24, 2023</td>
+                                <td style="text-align: right; font-weight: 600;">-$142.50</td>
+                            </tr>
+                            <tr>
+                                <td>Electric Bill</td>
+                                <td><span class="cat-tag cat-utilities">Utilities</span></td>
+                                <td>Oct 23, 2023</td>
+                                <td style="text-align: right; font-weight: 600;">-$85.00</td>
+                            </tr>
+                            <tr>
+                                <td>Apple Store</td>
+                                <td><span class="cat-tag cat-tech">Tech</span></td>
+                                <td>Oct 21, 2023</td>
+                                <td style="text-align: right; font-weight: 600;">-$29.99</td>
+                            </tr>
+                            <tr>
+                                <td>Starbucks</td>
+                                <td><span class="cat-tag cat-food">Food & Dining</span></td>
+                                <td>Oct 21, 2023</td>
+                                <td style="text-align: right; font-weight: 600;">-$6.45</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Why use FinTrack?</h2>
+            <p class="section-subtitle">We provide the tools you need to stop guessing and start understanding your financial health.</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Visual Analytics</h3>
+                    <p style="color: var(--text-muted);">Instantly see where your money goes with auto-generated charts and category breakdowns.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Bank-Level Security</h3>
+                    <p style="color: var(--text-muted);">Your data is encrypted end-to-end. We never sell your personal financial information.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Real-time Sync</h3>
+                    <p style="color: var(--text-muted);">Access your dashboard from desktop, tablet, or mobile. Your budget travels with you.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Take Control of Your Future</h2>
+            <p style="margin-bottom: 2rem; opacity: 0.9;">Join 50,000+ users saving more money every month.</p>
+            <a href="#" class="btn btn-primary" style="background: white; color: var(--primary);">Create Free Account</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div style="font-weight: 800; color: var(--primary); font-size: 1.5rem; margin-bottom: 1rem;">FinTrack</div>
+            <p>&copy; 2023 FinTrack Inc. All rights reserved.</p>
+            <div style="margin-top: 1rem;">
+                <a href="#" style="color: var(--text-muted); margin: 0 10px; text-decoration: none;">Privacy</a>
+                <a href="#" style="color: var(--text-muted); margin: 0 10px; text-decoration: none;">Terms</a>
+                <a href="#" style="color: var(--text-muted); margin: 0 10px; text-decoration: none;">Contact</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
