@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mindful Moments | Wellness for Professionals</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS RESET & VARIABLES */
+        :root {
+            --primary-sage: #8DA399;
+            --deep-sage: #5F7368;
+            --soft-sand: #F5F1E8;
+            --pure-white: #FFFFFF;
+            --text-dark: #333333;
+            --text-soft: #555555;
+            --accent-clay: #D4A373;
+            --accent-clay-hover: #B08255;
+            --light-mist: #EBF0F0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            background-color: var(--pure-white);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            color: var(--deep-sage);
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: 0.3s ease;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* UTILITIES */
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            background-color: var(--accent-clay);
+            color: var(--pure-white);
+            border-radius: 50px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: var(--accent-clay-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--deep-sage);
+            color: var(--deep-sage);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--deep-sage);
+            color: var(--pure-white);
+        }
+
+        .section-padding {
+            padding: 80px 0;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-soft);
+            max-width: 600px;
+            margin: 0 auto 3rem auto;
+        }
+
+        /* NAVIGATION */
+        header {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--deep-sage);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            font-weight: 400;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-clay);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+        }
+
+        /* HERO SECTION */
+        #hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #fdfbf7 0%, #e8f4f0 100%);
+            text-align: center;
+            padding-top: 60px; /* Offset for fixed header */
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: var(--deep-sage);
+        }
+
+        .hero-content p {
+            font-size: 1.25rem;
+            color: var(--text-soft);
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* HOW IT WORKS */
+        #how-it-works {
+            background-color: var(--pure-white);
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .step-card {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background-color: var(--soft-sand);
+            color: var(--deep-sage);
+            border-radius: 50%;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            line-height: 50px;
+            margin-bottom: 20px;
+        }
+
+        .step-card h3 {
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .step-card p {
+            color: var(--text-soft);
+        }
+
+        /* OFFERINGS (Meditations & Journaling) */
+        #offerings {
+            background-color: var(--soft-sand);
+        }
+
+        .offerings-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .offering-text {
+            padding: 20px;
+        }
+
+        .offering-card {
+            background-color: var(--pure-white);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            transition: transform 0.3s;
+        }
+
+        .offering-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .offering-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: var(--primary-sage);
+        }
+
+        /* TESTIMONIALS */
+        #testimonials {
+            background-color: var(--light-mist);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background-color: var(--pure-white);
+            padding: 35px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+        }
+
+        .quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.2rem;
+            color: var(--text-dark);
+            margin-bottom: 20px;
+        }
+
+        .author {
+            font-weight: 700;
+            color: var(--deep-sage);
+            font-size: 0.9rem;
+        }
+
+        .role {
+            font-size: 0.8rem;
+            color: var(--text-soft);
+        }
+
+        /* PRICING */
+        #pricing {
+            background-color: var(--pure-white);
+        }
+
+        .pricing-card {
+            background: linear-gradient(180deg, #ffffff 0%, #f9fbfb 100%);
+            border: 1px solid #eee;
+            border-radius: 20px;
+            padding: 50px;
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background-color: var(--primary-sage);
+        }
+
+        .price {
+            font-size: 3.5rem;
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--text-dark);
+            margin: 20px 0;
+        }
+
+        .price span {
+            font-size: 1rem;
+            font-family: 'Lato', sans-serif;
+            color: var(--text-soft);
+        }
+
+        .features-list {
+            margin: 30px 0;
+            text-align: left;
+            display: inline-block;
+        }
+
+        .features-list li {
+            margin-bottom: 15px;
+            color: var(--text-soft);
+            display: flex;
+            align-items: center;
+        }
+
+        .features-list li::before {
+            content: "•";
+            color: var(--primary-sage);
+            font-size: 1.5rem;
+            margin-right: 10px;
+            line-height: 1;
+        }
+
+        /* FINAL CTA */
+        #final-cta {
+            background-color: var(--deep-sage);
+            color: var(--pure-white);
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        #final-cta h2 {
+            color: var(--pure-white);
+            margin-bottom: 1.5rem;
+        }
+
+        #final-cta p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #final-cta .btn {
+            background-color: var(--pure-white);
+            color: var(--deep-sage);
+        }
+
+        #final-cta .btn:hover {
+            background-color: var(--soft-sand);
+            color: var(--text-dark);
+        }
+
+        /* FOOTER */
+        footer {
+            background-color: #2b2d2c;
+            color: #ccc;
+            padding: 40px 0;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        footer p {
+            margin-top: 10px;
+        }
+
+        /* RESPONSIVE MEDIA QUERIES */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                display: none; /* Simple hiding for this exercise */
+            }
+
+            .mobile-menu-btn {
+                display: block;
+                font-size: 1.5rem;
+                cursor: pointer;
+            }
+
+            .offerings-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">Mindful Moments</a>
+                <div class="nav-links">
+                    <a href="#how-it-works">How it Works</a>
+                    <a href="#offerings">Offerings</a>
+                    <a href="#testimonials">Stories</a>
+                    <a href="#pricing">Membership</a>
+                    <a href="#final-cta" style="font-weight: 700; color: var(--primary-sage);">Join Now</a>
+                </div>
+                <div class="mobile-menu-btn">☰</div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <div class="container hero-content">
+            <h1>Find Peace in the Chaos.</h1>
+            <p>A curated wellness sanctuary helping busy professionals manage stress, regain focus, and avoid burnout through guided intentionality.</p>
+            <a href="#pricing" class="btn">Start My Calm Journey</a>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="section-padding">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-title">Your Path to Serenity</h2>
+                <p class="section-subtitle">We've simplified wellness so it fits into your busy schedule, not the other way around.</p>
+            </div>
+            
+            <div class="steps-grid">
+                <div class="step-card">
+                    <span class="step-number">1</span>
+                    <h3>Pause</h3>
+                    <p>Take our 2-minute daily assessment to identify your current stress levels and emotional needs.</p>
+                </div>
+                <div class="step-card">
+                    <span class="step-number">2</span>
+                    <h3>Practice</h3>
+                    <p>Receive a personalized 5-10 minute audio meditation or journaling prompt tailored to your mood.</p>
+                </div>
+                <div class="step-card">
+                    <span class="step-number">3</span>
+                    <h3>Prosper</h3>
+                    <p>Track your mental clarity over time and watch your productivity and happiness return.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Offerings Section -->
+    <section id="offerings" class="section-padding">
+        <div class="container">
+            <div class="offerings-grid">
+                <div class="offering-text">
+                    <h2 class="section-title">Tools for the Mind</h2>
+                    <p class="section-subtitle" style="margin: 0 0 20px 0; text-align: left;">
+                        Our library is designed for the modern workflow. Whether you have five minutes between meetings or an hour on Sunday morning, we have the right tool for you.
+                    </p>
+                    <a href="#pricing" class="btn btn-outline">Explore Library</a>
+                </div>
+                <div class="offering-cards-container">
+                    <div class="offering-card">
+                        <div class="offering-icon">🎧</div>
+                        <h3>Guided Meditations</h3>
+                        <p>Short, impactful audio tracks focused on specific professional challenges: Imposter Syndrome, Pre-Meeting Anxiety, and Decompression.</p>
+                    </div>
+                    <div class="offering-card">
+                        <div class="offering-icon">✍️</div>
+                        <h3>Journaling Prompts</h3>
+                        <p>Cognitive Behavioral Therapy (CBT) inspired prompts to help you untangle complex thoughts and structure your day with intention.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="section-padding">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-title">Stories of Calm</h2>
+                <p class="section-subtitle">Hear from professionals who reclaimed their peace.</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <p class="quote">"I used to think I didn't have time for meditation. Mindful Moments showed me that 5 minutes is all it takes to reset my entire afternoon."</p>
+                    <p class="author">Elena R.</p>
+                    <p class="role">Senior Marketing Director</p>
+                </div>
+                <div class="testimonial-card">
+                    <p class="quote">"The journaling prompts are a game changer. They help me leave work at work and actually enjoy my time with my family."</p>
+                    <p class="author">Marcus T.</p>
+                    <p class="role">Software Engineer</p>
+                </div>
+                <div class="testimonial-card">
+                    <p class="quote">"Finally, a wellness app that understands the corporate world. It's not just fluff; it's actionable mental clarity."</p>
+                    <p class="author">Sarah L.</p>
+                    <p class="role">Project Manager</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="section-padding">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-title">Invest in Your Peace</h2>
+                <p class="section-subtitle">Simple, transparent pricing. Cancel anytime.</p>
+            </div>
+            
+            <div class="pricing-card">
+                <h3>The Mindful Monthly</h3>
+                <div class="price">$29<span>/month</span></div>
+                <p>Less than a dollar a day for mental clarity.</p>
+                
+                <ul class="features-list">
+                    <li>Unlimited access to Meditation Library</li>
+                    <li>Daily personalized Journaling Prompts</li>
+                    <li>Sleep soundscapes for deep rest</li>
+                    <li>Progress tracking dashboard</li>
+                    <li>Exclusive weekly webinars</li>
+                </ul>
+                
+                <a href="#final-cta" class="btn">Choose Plan</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section id="final-cta">
+        <div class="container">
+            <h2>Ready to Breathe Easier?</h2>
+            <p>Join thousands of professionals who have decided that success shouldn't come at the cost of their mental health.</p>
+            <button class="btn" onclick="alert('Welcome to your calm journey! Registration would open here.')">Start My Calm Journey</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Mindful Moments. All rights reserved.</p>
+            <p style="opacity: 0.6; font-size: 0.8rem;">Designed for peace.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
